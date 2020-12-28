@@ -28,54 +28,54 @@ def main():
 
 
   # setup a directory path for future functions to utilize
-#  working_dir = path
-#  os.chdir(path)
+  working_dir = path
+  os.chdir(path)
 
   # check to make sure all files need in next steps are able to be found
   # also tells user how much disk space will be needed to complete program
-#  input_validator(requests, path, band_list)
+  input_validator(requests, path, band_list)
 
 
   # convert all images to tif and place into new working directory
   # uses GDAL translate
-#  batch_jp2_to_tif(band_list, working_dir)
+  batch_jp2_to_tif(band_list, working_dir)
 
   # change working dir
-#  os.chdir(path)
-#  working_dir = os.path.join(path, "tmp/converted")
+  os.chdir(path)
+  working_dir = os.path.join(path, "tmp/converted")
 
 
   # histogram match each band using OSSIM,
   # first image in list is used as reference
-#  hist_match(band_list, working_dir)
+  hist_match(band_list, working_dir)
 
   # delete converted images to free up space
-#  trashbin(working_dir)
+  trashbin(working_dir)
   # change working dir
-#  os.chdir(path)
-#  working_dir = os.path.join(path, "tmp/hist_matched")
+  os.chdir(path)
+  working_dir = os.path.join(path, "tmp/hist_matched")
 
 
   # mosaic together each band with blending, via OSSIM
-#  mosaic(band_list, working_dir)
+  mosaic(band_list, working_dir)
 
   # delete histogram matched images to free up space
-#  trashbin(working_dir)
+  trashbin(working_dir)
   # change working dir
-#  os.chdir(path)
-#  working_dir = os.path.join(path, "tmp/band_mosiacs")
-#
+  os.chdir(path)
+  working_dir = os.path.join(path, "tmp/band_mosiacs")
+
 
   # create composite mosiac for requests that are combined into r,g,b bands
   # outputs into 'output' folder inside parent path and beside 'tmp' folder
-#  merge_bands(requests, working_dir)
+  merge_bands(requests, working_dir)
 
   # perform raster calculations for requests that are single band outputs
   # outputs into 'output' folder inside parent path and beside 'tmp' folder
-#  raster_calculator(requests, working_dir)
+  raster_calculator(requests, working_dir)
 
   # delete band mosaic images to free up space
-#  trashbin(working_dir)
+  trashbin(working_dir)
 
   # perform final clean up (of tmp folder) and exit
 
