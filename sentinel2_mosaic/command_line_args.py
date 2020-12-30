@@ -1,5 +1,7 @@
-import argparse
 from __init__ import *
+from globals import *
+
+import argparse
 
 
 def cli_parser() -> Tuple[List[str], str]:
@@ -15,7 +17,7 @@ def cli_parser() -> Tuple[List[str], str]:
         const=True,
         default=False,
         dest="truecolor",
-        help="create a true color image. Based on bands 4,3,2 for r,g,b",
+        help="create a true color image. Based on bands 4,3,2 for r,g,b -> [10m]",
     )
 
     parser.add_argument(
@@ -24,7 +26,7 @@ def cli_parser() -> Tuple[List[str], str]:
         const=True,
         default=False,
         dest="falsecolor",
-        help="create a false color image. Based on bands 8,4,3 for r,g,b",
+        help="create a false color image. Based on bands 8,4,3 for r,g,b -> [10m]",
     )
 
     parser.add_argument(
@@ -33,7 +35,7 @@ def cli_parser() -> Tuple[List[str], str]:
         const=True,
         default=False,
         dest="urban",
-        help="create a false color (urban) image. Based on bands 12,11,4 for r,g,b",
+        help="create a false color (urban) image. Based on bands 12,11,4 for r,g,b -> [20m]",
     )
 
     parser.add_argument(
@@ -42,7 +44,7 @@ def cli_parser() -> Tuple[List[str], str]:
         const=True,
         default=False,
         dest="swir",
-        help="create a short-wave infrared (SWIR) image. Based on bands 12,8A,4 for r,g,b",
+        help="create a short-wave infrared (SWIR) image. Based on bands 12,8A,4 for r,g,b -> [20m]",
     )
 
     parser.add_argument(
@@ -51,7 +53,7 @@ def cli_parser() -> Tuple[List[str], str]:
         const=True,
         default=False,
         dest="ndvi",
-        help="create a normalized difference vegetation index (NDVI) image. Based on bands (B8-B4) / (B8+B4)",
+        help="create a normalized difference vegetation index (NDVI) image. Based on bands (B8-B4) / (B8+B4) -> [10m]",
     )
 
     parser.add_argument(
@@ -60,7 +62,7 @@ def cli_parser() -> Tuple[List[str], str]:
         const=True,
         default=False,
         dest="moisture",
-        help="create a moisture index image. Based on bands (B8A-B11) / (B8A+B11)",
+        help="create a moisture index image. Based on bands (B8A-B11) / (B8A+B11) -> [20m]",
     )
 
     parser.add_argument(
@@ -69,7 +71,7 @@ def cli_parser() -> Tuple[List[str], str]:
         const=True,
         default=False,
         dest="ndwi",
-        help="create a normalized difference water index (NDWI) image. Based on bands (B3-B8) / (B3+B8)",
+        help="create a normalized difference water index (NDWI) image. Based on bands (B3-B8) / (B3+B8) -> [10m]",
     )
 
     parser.add_argument(
@@ -78,7 +80,7 @@ def cli_parser() -> Tuple[List[str], str]:
         const=True,
         default=False,
         dest="ndsi",
-        help="create a normalized difference snow index (NDSI) image. Based on bands (B3-B11) / (B3+B11)",
+        help="create a normalized difference snow index (NDSI) image. Based on bands (B3-B11) / (B3+B11) -> [20m]",
     )
 
     available_bands = [
@@ -136,8 +138,6 @@ def cli_parser() -> Tuple[List[str], str]:
     else:
         pass
 
-    path = "".join(args.path)  # Debugging
-    print(path)
+    path = "".join(args.path)
 
-    print(output_options)
     return requests, path

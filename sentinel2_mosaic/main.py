@@ -12,32 +12,53 @@
 #     - Whitebox [version 1.4]
 #     - OSSIM [version ]
 
-from __init__ import *
+from __init__ import *  # global imports
+from globals import *  # global variables
+
+from command_line_args import cli_parser
+from list_creator import get_bands, get_files, get_tiles, duplicate_tiles
+from helpers import (
+    continue_check,
+    endswith_walk_filter,
+    trashbin,
+    path_check,
+    file_check,
+)
+from jp2_to_tif import batch_jp2_to_tif
+from hist_match import hist_match
+from blend_mosaic import mosaic
+from raster_builder import merge_bands, raster_calculator
 
 
 def main():
 
     # parse out the cli arguments into a tuple {[requests] , 'path/to/data'}
-    provided_args = cli_parser()  #
+    provided_args = cli_parser()
 
     # a list of all requested outputs
-    requests: Tuple[List[str], str] = provided_args[0]
-    # a string pointing to data folder
+    requests: List[str] = provided_args[0]
+    # a string of the path to data directory
     path: str = provided_args[1]
+    # check if path points to valid directory
+    path_check(path)
+
     # a list of bands that need to be processed (ex. 'B03_10m)
     band_list: List[str] = get_bands(requests, path)
+
+    # a list of all files and tiles found with the path directory
+    initial_file_list: List[str] = get_files(band_list, path, ".jp2")
+    tile_list: List[str] = get_tiles(initial_file_list)
+    duplicates_list: List[str] = duplicate_tiles(tile_list)
+    # validate files to ensure conistnecy before continueing on with next steps
+    file_check(initial_file_list, tile_list, duplicates_list)
 
     # setup a directory path for future functions to utilize
     working_dir = path
     os.chdir(path)
 
-    # check to make sure all files need in next steps are able to be found
-    # also tells user how much disk space will be needed to complete program
-    input_validator(requests, path, band_list)
-
     # convert all images to tif and place into new working directory
     # uses GDAL translate
-    batch_jp2_to_tif(band_list, working_dir)
+    batch_jp2_to_tif(initial_file_list, working_dir)
 
     # change working dir
     os.chdir(path)

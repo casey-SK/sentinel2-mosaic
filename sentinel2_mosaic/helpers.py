@@ -1,5 +1,4 @@
-import typing
-from typing import List
+from __init__ import *
 
 
 def continue_check(check: str):
@@ -27,9 +26,23 @@ def endswith_walk_filter(path: str, keyword: str) -> List[str]:
     return filter_list
 
 
-def trashbin():
+def trashbin(working_dir: str):
     pass
 
 
-def input_validator():
+def path_check(path: str):
+    """ some docstring """
+
+    # check to ensure provided path exists
+    if os.path.isdir(path):
+        print("\n  Checking for data folder ... found. \n")
+    else:
+        print("\n Error: Provided path argument: ", path)
+        print(
+            "        Could not open directory specified in path argument. Exiting...\n"
+        )
+        quit()
+
+
+def file_check(band_list: List[str], file_list: List[str], duplicates: List[str]):
     pass
