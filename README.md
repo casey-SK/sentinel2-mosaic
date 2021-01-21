@@ -1,4 +1,7 @@
 # sentinel2-mosaic tool
+**Not Currently Functional :(**
+
+
 *A command line program to build mosiac(s) from Sentinel 2
 satellite imagery, using various band options.*
 
